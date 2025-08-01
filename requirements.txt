@@ -4,6 +4,6 @@ sqlalchemy==2.0.30
 python-dotenv==1.0.1
 passlib[bcrypt]
 python-jose[cryptography]
-psycopg2-binary==2.9.9
+pydantic[email]
 
 
