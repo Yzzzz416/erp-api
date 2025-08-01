@@ -67,3 +67,22 @@ def update_product(product_id: int, product_data: ProductUpdate, db: db_dependen
     db.commit()
     db.refresh(product)
     return product
+    
+# --- 刪除商品（限 admin） ---
+@router.delete("/{product_id}", dependencies=[Depends(roles_required("admin"))])
+def delete_product(
+    product_id: int,
+    confirm: bool = Query(False, description="是否確認刪除商品"),
+    db: db_dependency = Depends()
+):
+    if not confirm:
+        raise HTTPException(status_code=400, detail="請加上 confirm=true 才能執行刪除")
+
+    product = db.query(Product).filter(Product.id == product_id).first()
+    if not product:
+        raise HTTPException(status_code=404, detail="找不到此商品")
+
+    db.delete(product)
+    db.commit()
+    return {"message": f"商品 ID {product_id} 已刪除"}
+
