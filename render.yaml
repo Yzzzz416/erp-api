@@ -10,7 +10,7 @@ services:
           name: erp-db
           property: connectionString
       - key: SECRET_KEY
-        value: your-secret-key-here
+        value: superkey123
 
 databases:
   - name: erp-db
